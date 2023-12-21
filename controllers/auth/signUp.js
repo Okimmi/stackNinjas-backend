@@ -15,6 +15,7 @@ const signUp = async (req, res, next) => {
     ...req.body,
     password: hashPassword,
   });
+  result.password = undefined;
 
   res.status(201).json({
     user: result,
