@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const httpError = require('./httpError');
 
 const getHashPassword = async ({ currentPassword, updateInfo }) => {
-  const { passwordOutdated, password } = updateInfo;
+  const { passwordOutdated = '', password } = updateInfo;
   const isValidOutdatedPassword = await bcrypt.compare(
     passwordOutdated,
     currentPassword
