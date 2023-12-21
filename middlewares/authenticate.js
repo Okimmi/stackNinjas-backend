@@ -14,9 +14,7 @@ const authenticate = async (req, res, next) => {
 
   try {
     const { id } = jwt.verify(token, SECRET_KEY);
-    const user = await User.findById(id).select(
-      '-password -createdAt -updatedAt'
-    );
+    const user = await User.findById(id).select('-createdAt -updatedAt');
 
     if (!user || user.token !== token) {
       throw httpError({ status: 401 });

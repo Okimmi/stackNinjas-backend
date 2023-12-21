@@ -25,6 +25,7 @@ const {
   dailyWaterRequirementErr,
   dailyWaterRequirement,
   emptyStringErr,
+  missingFieldsErr,
 } = errorMessages;
 
 const userSchema = new Schema(
@@ -113,6 +114,28 @@ const dailyWaterRequirementSchema = Joi.object({
     }),
 });
 
+const updateProfileSchema = Joi.object({
+  password: passwordSettings,
+  passwordRepeat: Joi.string().when('password', {
+    is: String,
+    then: passwordRepeatSettings.required(),
+  }),
+  passwordOutdated: passwordSettings,
+  gender: Joi.string()
+    .valid(...genders)
+    .messages({
+      'any.only': genderEnumErr,
+    }),
+  name: Joi.string().pattern(notEmptyValueRegExp).messages({
+    'string.empty': emptyStringErr,
+  }),
+  email: emailSettings,
+})
+  .min(1)
+  .messages({
+    'object.min': missingFieldsErr,
+  });
+
 const User = model('user', userSchema);
 
 module.exports = {
@@ -120,4 +143,5 @@ module.exports = {
   signUpSchema,
   signInSchema,
   dailyWaterRequirementSchema,
+  updateProfileSchema,
 };

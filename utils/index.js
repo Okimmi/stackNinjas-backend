@@ -7,6 +7,7 @@ const getImageFilename = require('./getImageFilename');
 const filterFieldsToUpdate = require('./filterFieldsToUpdate');
 const getTodayTime = require('./getTodayTime');
 const getTodayProgress = require('./getTodayProgress');
+const getHashPassword = require('./getHashPassword');
 
 module.exports = {
   ctrlWrapper,
@@ -18,4 +19,5 @@ module.exports = {
   filterFieldsToUpdate,
   getTodayTime,
   getTodayProgress,
+  getHashPassword,
 };
