@@ -53,14 +53,9 @@ const addHydrationEntrySchema = Joi.object({
     }),
 });
 
-const updateHydrationEntrySchema = Joi.object().min(1).messages({
-  'object.min': 'Missing fields',
-});
-
 const HydrationEntry = model('hydrationEntry', hydrationEntrySchema);
 
 module.exports = {
   HydrationEntry,
   addHydrationEntrySchema,
-  updateHydrationEntrySchema,
 };

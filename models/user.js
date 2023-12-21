@@ -3,7 +3,7 @@ const Joi = require('joi');
 const hooks = require('./hooks');
 const { errorMessages, regExp, profileSettings } = require('../constants');
 
-const { emailRegExp } = regExp;
+const { emailRegExp, notEmptyValueRegExp } = regExp;
 const { handleMongooseError, preUpdate } = hooks;
 const {
   passMinLength,
@@ -24,6 +24,7 @@ const {
   genderEnumErr,
   dailyWaterRequirementErr,
   dailyWaterRequirement,
+  emptyStringErr,
 } = errorMessages;
 
 const userSchema = new Schema(
@@ -36,6 +37,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
+      match: [notEmptyValueRegExp, emptyStringErr],
       minLength: [passMinLength, passwordMinLengthErr],
       required: [true, passwordRequiredErr],
     },
@@ -48,7 +50,10 @@ const userSchema = new Schema(
       type: String,
       enum: { values: genders, message: genderEnumErr },
     },
-    name: String,
+    name: {
+      type: String,
+      match: [notEmptyValueRegExp, emptyStringErr],
+    },
     dailyWaterRequirement: {
       type: Number,
       min: [minDailyWaterRequirement, dailyWaterRequirementErr],
@@ -68,12 +73,14 @@ const emailSettings = Joi.string().pattern(emailRegExp).messages({
 });
 
 const passwordSettings = Joi.string()
+  .pattern(notEmptyValueRegExp)
   .min(passMinLength)
   .max(passMaxLength)
   .messages({
     'any.required': passwordRequiredErr,
     'string.min': passwordMinLengthErr,
     'string.max': passwordMaxLengthErr,
+    'string.pattern.base': emptyStringErr,
   });
 
 const passwordRepeatSettings = Joi.string()
@@ -106,16 +113,11 @@ const dailyWaterRequirementSchema = Joi.object({
     }),
 });
 
-const updateProfileSchema = Joi.object().min(1).messages({
-  'object.min': 'Missing fields',
-});
-
 const User = model('user', userSchema);
 
 module.exports = {
   User,
   signUpSchema,
   signInSchema,
-  updateProfileSchema,
   dailyWaterRequirementSchema,
 };
