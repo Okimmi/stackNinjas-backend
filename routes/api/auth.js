@@ -8,27 +8,29 @@ const {
   updateProfile,
 } = require('../../controllers/auth');
 const { validateBody, authenticate, upload } = require('../../middlewares');
-const {
-  signUpSchema,
-  signInSchema,
-  updateProfileSchema,
-} = require('../../models/user');
+const { signUpSchema, signInSchema } = require('../../models/user');
+const { notEmptyBodySchema } = require('../../schemas');
 
 const router = express.Router();
 
 router.post(
   '/signup',
-  upload.single('avatar'),
+  validateBody(notEmptyBodySchema),
   validateBody(signUpSchema),
   signUp
 );
-router.post('/signin', validateBody(signInSchema), signIn);
+router.post(
+  '/signin',
+  validateBody(notEmptyBodySchema),
+  validateBody(signInSchema),
+  signIn
+);
 router.post('/signout', authenticate, signOut);
 router.get('/current', authenticate, current);
 router.put(
   '/profile',
   authenticate,
-  validateBody(updateProfileSchema),
+  validateBody(notEmptyBodySchema),
   updateProfile
 );
 router.patch('/avatars', authenticate, upload.single('avatar'), updateAvatar);

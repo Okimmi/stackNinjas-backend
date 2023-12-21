@@ -1,6 +1,8 @@
 const profileSettings = require('./profileSettings');
 
 const errorMessages = {
+  emptyStringErr: 'Value cannot be the empty string',
+  missingFieldsErr: 'Missing fields',
   emailRegExpErr: 'Email must be letters, digits, dot and @',
   emailRequiredErr: 'Missing required email field',
   passwordRequiredErr: 'Missing required password field',

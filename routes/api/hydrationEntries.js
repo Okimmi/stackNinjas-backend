@@ -7,22 +7,25 @@ const {
   deleteById,
   getProgress,
 } = require('../../controllers/hydrationEntries');
-const {
-  addHydrationEntrySchema,
-  updateHydrationEntrySchema,
-} = require('../../models/hydrationEntry');
+const { addHydrationEntrySchema } = require('../../models/hydrationEntry');
+const { notEmptyBodySchema } = require('../../schemas');
 
 const router = express.Router();
 
 router.use(authenticate);
 
-router.post('/', validateBody(addHydrationEntrySchema), add);
+router.post(
+  '/',
+  validateBody(notEmptyBodySchema),
+  validateBody(addHydrationEntrySchema),
+  add
+);
 router.get('/today', getProgress);
 router.get('/:entryId', isValidId, getById);
 router.put(
   '/:entryId',
   isValidId,
-  validateBody(updateHydrationEntrySchema),
+  validateBody(notEmptyBodySchema),
   updateById
 );
 router.delete('/:entryId', isValidId, deleteById);
