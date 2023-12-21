@@ -1,0 +1,239 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "WaterTracker",
+    "description": "This is a sample documentation for the WaterTracker application based on OpenApi 3.0.1. This documentation provides access to the core functionalities of our service. The API enables you to retrieve and send data, manage resources, and interact with the application. We continuously work on improving it, updating, and expanding its functionality. Please review our documentation to learn how to get started with our API and seamlessly integrate it into your projects.",
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "http://localhost:3000",       
+      "description": "Development server"
+    }, 
+    {
+      "url": "",
+      "description": "Publishing server"
+    }
+  ],
+  
+  "tags": [
+    { "name": "Auth", "description": "Authorization endpoints" },
+    { "name": "Aquatrack", "description": "Aquatrack endpoints" },
+    { "name": "Hydration-entries", "description": "Hydration-entries endpoints" },
+    { "name": "Api-docs", "description": "Prodject documentation endpoints" }
+  ],
+
+  "paths": {
+    "/api/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register a new user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration user",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Succesful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Email already use",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+  
+      }
+    },
+
+    "/api/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login an account",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    }      
+
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "password", "passwordRepeat"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user11@mail.com",
+            "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "user-11.password12345678"
+          },
+          "passwordRepeat": {
+            "type": "string",
+            "description": "User's repeat password",
+            "example": "user-11.password12345678"
+          }
+
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Registration success"
+          }
+        }
+      },
+
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user11@mail.com",
+            "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "user-11.password12345678"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "_id": {
+                  "type": "string",
+                  "description": "User's id",
+                  "example": "User_id-1"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "User's name",
+                  "example": "User11"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "User's email",
+                  "format": "email",
+                  "example": "user11@mail.com",
+                  "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "User's password",
+                  "example": "user-11.password12345678"
+                },
+                "gender": {
+                  "type": "string",
+                  "description": "Gender (girl || man)",
+                  "example": "girl"
+                },
+                "avatar": {
+                  "type": "string",
+                  "description": "URL for users avatar image",
+                  "example": "http://avatar_link.com"
+                },
+                "dailyWaterRequirement": {
+                  "type": "number",
+                  "description": "Requirement water for one day",
+                  "example": "1500"
+                }
+              },
+              "token": {
+                "type": "string",
+                "description": "Access token",
+                "example": "token"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
