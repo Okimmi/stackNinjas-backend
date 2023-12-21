@@ -35,7 +35,6 @@
         "tags": ["Auth"],
         "summary": "Register a new user",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Registration user",
           "required": true,
@@ -71,7 +70,6 @@
             "content": {}
           }
         }
-  
       }
     },
 
@@ -116,7 +114,139 @@
           }
         }
       }
-    }      
+    },
+
+    "/api/auth/signout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout",
+        "security": [{ "Bearer": [] }],
+        "parameters": [{ "in": "path", "name": "_id" }],
+        "responses": {
+          "204": {
+            "description": "Logout success",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/auth/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get info about current user",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Operation success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/CurrentUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/auth/profile": {
+      "put": {
+        "tags": ["Auth"],
+        "summary": "Update user's data",
+        "parameters": [
+          { "in": "path", "name": "_id" }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration user",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/UpdateUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "Page not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+
+    "/api/api-docs": {
+      "get": {
+        "tags": ["Api-docs"],
+        "summary": "Swagger endpoints documentation",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Succesful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/DocsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    }
+
 
   },
   "components": {
@@ -176,57 +306,166 @@
       "LoginResponse": {
         "type": "object",
         "properties": {
+          "token": {
+            "type": "string",
+            "description": "Access token",
+            "example": "token"
+          },
           "user": {
             "type": "object",
             "properties": {
-              "user": {
-                "_id": {
-                  "type": "string",
-                  "description": "User's id",
-                  "example": "User_id-1"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "User's name",
-                  "example": "User11"
-                },
-                "email": {
-                  "type": "string",
-                  "description": "User's email",
-                  "format": "email",
-                  "example": "user11@mail.com",
-                  "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
-                },
-                "password": {
-                  "type": "string",
-                  "description": "User's password",
-                  "example": "user-11.password12345678"
-                },
-                "gender": {
-                  "type": "string",
-                  "description": "Gender (girl || man)",
-                  "example": "girl"
-                },
-                "avatar": {
-                  "type": "string",
-                  "description": "URL for users avatar image",
-                  "example": "http://avatar_link.com"
-                },
-                "dailyWaterRequirement": {
-                  "type": "number",
-                  "description": "Requirement water for one day",
-                  "example": "1500"
-                }
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email",
+                "example": "user11@mail.com",
+                "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+              }
+            }
+          }
+        }
+      },
+
+      
+      "CurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "658403f367c68f1d83745893"
               },
               "token": {
                 "type": "string",
                 "description": "Access token",
                 "example": "token"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "User11"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email",
+                "example": "user11@mail.com",
+                "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's password",
+                "example": "user-11.password12345678"
+              },
+              "gender": {
+                "type": "string",
+                "description": "Gender (girl || man)",
+                "example": "girl"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "URL for users avatar image",
+                "example": "http://avatar_link.com"
+              },
+              "dailyWaterRequirement": {
+                "type": "integer",
+                "description": "Requirement water for one day",
+                "example": "1500"
               }
             }
           }
         }
+      },
+
+      "UpdateUserRequest": {
+        "type": "object",
+        "required": ["_id"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "User11_1"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user11@mail.com",
+            "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "URL for users avatar image",
+            "example": "http://avatar.com"
+          },
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Requirement water for one day",
+            "example": "1300"
+          }
+        }
+      },
+      "UpdateUserResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "658403f367c68f1d83745893"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "User11_1"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email",
+                "example": "user11@mail.com",
+                "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's password",
+                "example": "user-11.password12345678"
+              },
+              "gender": {
+                "type": "string",
+                "description": "Gender (girl || man)",
+                "example": "girl"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "URL for users avatar image",
+                "example": "http://avatar.com"
+              },
+              "dailyWaterRequirement": {
+                "type": "integer",
+                "description": "Requirement water for one day",
+                "example": "1300"
+              }
+            }
+          }
+        }
+      },
+
+      "DocsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Html swagger document"
+          }
+        }
       }
+
     },
     "securitySchemes": {
       "Bearer": {
