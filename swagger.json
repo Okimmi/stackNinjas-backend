@@ -228,7 +228,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "type": "object",
+                "type": "object", 
                 "properties": {
                   "avatar": {
                     "type": "string",
