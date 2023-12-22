@@ -361,7 +361,7 @@
     "/api/hydration-entries/today": {
       "get": {
         "tags": ["Hydration-entries"],
-        "summary": "Get all hydration-entries tasks for day",
+        "summary": "Progress drinking water for today and get all hydration-entries tasks for today",
         "security": [{ "Bearer": [] }],
         "parameters": [],
         "responses": {
