@@ -29,6 +29,7 @@ const hydrationEntrySchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'user',
     },
+    dailyWaterRequirement: { type: Number, required: true },
   },
   { versionKey: false, timestamps: true }
 );
