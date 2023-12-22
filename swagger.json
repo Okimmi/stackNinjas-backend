@@ -492,7 +492,8 @@
             "name": "entryId",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": { "type": "string" },
+            "example": "658600812106590a0fa53b0f"
           }
         ],
         "requestBody": {
@@ -861,6 +862,11 @@
       "UpdateHydrationEntriesResponse": {
         "type": "object",
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Water task id",
+            "example": "658600812106590a0fa53b0f"
+          },
           "time": {
             "type": "string",
             "description": "DateTime of adding task",
@@ -871,22 +877,6 @@
             "type": "integer",
             "description": "How many mililitres of the water entries",
             "example": "1500"
-          },
-          "owner": {
-            "type": "string",
-            "description": "Owner's user id"
-          },
-          "_id": {
-            "type": "string",
-            "description": "Water task id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Date of creating task"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Date of last updating task"
           }
         }
       },
