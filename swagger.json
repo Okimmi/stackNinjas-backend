@@ -179,7 +179,7 @@
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration user",
+          "description": "Update user's data",
           "required": true,
           "content": {
             "application/json": {
@@ -256,6 +256,55 @@
           },
           "404": {
             "description": "File is absent",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/aquatrack/daily-water-requirement": {
+      "patch": {
+        "tags": ["Aquatrack"],
+        "summary": "Update data norms daily water requirement",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Update data norms daily water requirement",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/UpdateDailyWaterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/UpdateDailyWaterResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required daily water requirement field",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+
+          "404": {
+            "description": "Page not found",
             "content": {}
           },
           "500": {
@@ -522,6 +571,32 @@
           "avatar": {
             "type": "string",
             "example": "http://avatar_link.com"
+          }
+        }
+      },
+
+      "UpdateDailyWaterRequest": {
+        "type": "object",
+        "properties": {
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Requirement water for one day",
+            "example": "1200"
+          }
+        }
+      },
+      "UpdateDailyWaterResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "658403f367c68f1d83745893"
+          },
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Requirement water for one day",
+            "example": "1200"
           }
         }
       },
