@@ -879,7 +879,7 @@
             "example": "1500"
           }
         }
-      },
+      }, 
 
       "AddHydrationEntriesRequest": {
         "type": "object",
