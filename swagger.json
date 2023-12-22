@@ -176,9 +176,7 @@
       "put": {
         "tags": ["Auth"],
         "summary": "Update user's data",
-        "parameters": [
-          { "in": "path", "name": "_id" }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Registration user",
