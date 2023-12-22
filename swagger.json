@@ -728,15 +728,26 @@
             "example": "user11@mail.com",
             "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
           },
-          "avatar": {
+          "gender": {
             "type": "string",
-            "description": "URL for users avatar image",
-            "example": "http://avatar.com"
+            "description": "User's gender: [\"girl\", \"man\"]",
+            "enum": ["girl", "man"],
+            "example": "girl"
           },
-          "dailyWaterRequirement": {
-            "type": "integer",
-            "description": "Requirement water for one day",
-            "example": "1300"
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "12345678"
+          },
+          "passwordRepeat": {
+            "type": "string",
+            "description": "User's repeat password",
+            "example": "12345678"
+          },
+          "passwordOutdated": {
+            "type": "string",
+            "description": "User's old password",
+            "example": "user-11.password12345678"
           }
         }
       },
@@ -763,11 +774,6 @@
                 "example": "user11@mail.com",
                 "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
               },
-              "password": {
-                "type": "string",
-                "description": "User's password",
-                "example": "user-11.password12345678"
-              },
               "gender": {
                 "type": "string",
                 "description": "Gender (girl || man)",
@@ -782,7 +788,17 @@
               "dailyWaterRequirement": {
                 "type": "integer",
                 "description": "Requirement water for one day",
-                "example": "1300"
+                "example": "1200"
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "DateTime of creating user",
+                "example": "2023-12-21T09:22:59.612Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "DateTime of last updating user",
+                "example": "2023-12-22T19:53:52.702Z"
               }
             }
           }
@@ -926,11 +942,13 @@
           },
           "createdAt": {
             "type": "string",
-            "description": "DateTime of creating task"
+            "description": "DateTime of creating task",
+            "example": "2023-12-20T15:23:56.789+00:00"
           },
           "updatedAt": {
             "type": "string",
-            "description": "DateTime of last updating task"
+            "description": "DateTime of last updating task",
+            "example": "2023-12-22T17:23:56.789+00:00"
           }
         }
       },
