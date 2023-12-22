@@ -414,7 +414,8 @@
             "name": "entryId",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": { "type": "string" },
+            "example": "658600812106590a0fa53b0f"
           }
         ],
         "responses": {
@@ -423,13 +424,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Task with id=entryId found"
-                    }
-                  }
+                  "$ref": "#components/schemas/GetHydrationFromIdResponse"
                 }
               }
             }
@@ -458,7 +453,8 @@
             "name": "entryId",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": { "type": "string" },
+            "example": "658600912106590a0fa53b12"
           }
         ],
         "responses": {
@@ -467,13 +463,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Task with id=entryId deleted"
-                    }
-                  }
+                  "$ref": "#components/schemas/DeleteHydrationFromIdResponse"
                 }
               }
             }
@@ -925,30 +915,27 @@
             "type": "string",
             "description": "DateTime of adding task",
             "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
-            "example": "2023-12-22T17:23:56.789+00:00"
+            "example": "2023-12-22T17:23:56.789Z"
           },
           "amount": {
             "type": "integer",
             "description": "How many mililitres of the water entries",
             "example": "1700"
           },
-          "owner": {
-            "type": "string",
-            "description": "Owner's user id"
-          },
           "_id": {
             "type": "string",
-            "description": "Hydration-entries task id"
+            "description": "Hydration-entries task id",
+            "example": "658600972106590a0fa53b15"
           },
           "createdAt": {
             "type": "string",
             "description": "DateTime of creating task",
-            "example": "2023-12-20T15:23:56.789+00:00"
+            "example": "2023-12-22T21:33:11.066Z"
           },
           "updatedAt": {
             "type": "string",
             "description": "DateTime of last updating task",
-            "example": "2023-12-22T17:23:56.789+00:00"
+            "example": "2023-12-22T21:33:11.066Z"
           }
         }
       },
@@ -956,38 +943,98 @@
       "ProgressForTodayResponse": {
         "type": "object",
         "properties": {
-          "data": [{
-            "time": {
-              "type": "string",
-              "description": "DateTime of adding task",
-              "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
-              "example": "2023-12-22T17:23:56.789+00:00"
-            },
-            "amount": {
-              "type": "integer",
-              "description": "How many mililitres of the water entries",
-              "example": "1500"
-            },
-            "owner": {
-              "type": "string",
-              "description": "Owner's user id"
-            },
-            "_id": {
-              "type": "string",
-              "description": "Hydration-entries task id"
-            },
-            "createdAt": {
-              "type": "string",
-              "description": "DateTime of creating task"
-            },
-            "updatedAt": {
-              "type": "string",
-              "description": "DateTime of last updating task"
+          "data": {
+            "type": "array",
+            "description": "Array tasks drinking water for today",
+            "items": {
+              "$ref": "#/components/schemas/DataHydrationEntries"
             }
-          }],
+          },
           "progress": {
             "type": "integer",
-            "description": "Progress drinking water for today"
+            "description": "Progress drinking water for today",
+            "example": "425"
+          }
+        }
+      },
+
+      "DataHydrationEntries": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Hydration-entries task id",
+            "example": "658600812106590a0fa53b0f"
+          },
+          "time": {
+            "type": "string",
+            "description": "DateTime of adding task",
+            "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
+            "example": "2023-12-22T17:23:56.789Z"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "How many mililitres of the water entries",
+            "example": "1500"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner's user id",
+            "example": "658403f367c68f1d83745893"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "DateTime of creating task",
+            "example": "2023-12-22T21:32:49.854Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "DateTime of last updating task",
+            "example": "2023-12-22T21:32:49.854Z"
+          }
+        }
+      },
+
+      "GetHydrationFromIdResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Hydration-entries task id",
+            "example": "658600812106590a0fa53b0f"
+          },
+          "time": {
+            "type": "string",
+            "description": "DateTime of adding task",
+            "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
+            "example": "2023-12-22T17:23:56.789Z"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "How many mililitres of the water entries",
+            "example": "1500"
+          }
+        }
+      },
+
+      "DeleteHydrationFromIdResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Hydration-entries task id",
+            "example": "658600912106590a0fa53b12"
+          },
+          "time": {
+            "type": "string",
+            "description": "DateTime of adding task",
+            "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
+            "example": "2023-12-22T17:23:56.789Z"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "How many mililitres of the water entries",
+            "example": "1700"
           }
         }
       },
