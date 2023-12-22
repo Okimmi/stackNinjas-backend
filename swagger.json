@@ -15,9 +15,9 @@
     {
       "url": "http://localhost:3000",       
       "description": "Development server"
-    }, 
+    },
     {
-      "url": "",
+      "url": "https://stackninjas-backend.onrender.com",
       "description": "Publishing server"
     }
   ],
