@@ -218,6 +218,56 @@
       }
     },
 
+    "/api/auth/avatars": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Update user's avatar image",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Update's object avatar",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update user avatar image success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/UpdateAvatarUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "File is absent",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
 
     "/api/api-docs": {
       "get": {
@@ -439,6 +489,7 @@
               "gender": {
                 "type": "string",
                 "description": "Gender (girl || man)",
+                "enum": ["girl", "man"],
                 "example": "girl"
               },
               "avatar": {
@@ -452,6 +503,27 @@
                 "example": "1300"
               }
             }
+          }
+        }
+      },
+
+      "UpdateAvatarUserRequest": {
+        "type": "object",
+        "required": ["_id", "avatar"],
+        "properties": {
+          "avatar": {
+            "type": "file",
+            "format":"binary"
+          }
+        }
+      },
+
+      "UpdateAvatarUserResponse": {
+        "type": "object",
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "example": "http://avatar_link.com"
           }
         }
       },
