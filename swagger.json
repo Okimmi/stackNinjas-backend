@@ -15,9 +15,9 @@
     {
       "url": "http://localhost:3000",       
       "description": "Development server"
-    }, 
+    },
     {
-      "url": "",
+      "url": "https://stackninjas-backend.onrender.com",
       "description": "Publishing server"
     }
   ],
@@ -176,12 +176,10 @@
       "put": {
         "tags": ["Auth"],
         "summary": "Update user's data",
-        "parameters": [
-          { "in": "path", "name": "_id" }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration user",
+          "description": "Update user's data",
           "required": true,
           "content": {
             "application/json": {
@@ -209,6 +207,340 @@
           "404": {
             "description": "Page not found",
             "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/auth/avatars": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Update user's avatar image",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Update's object avatar",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object", 
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update user avatar image success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/UpdateAvatarUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "File is absent",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/aquatrack/daily-water-requirement": {
+      "patch": {
+        "tags": ["Aquatrack"],
+        "summary": "Update data norms daily water requirement",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Update data norms daily water requirement",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/UpdateDailyWaterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/UpdateDailyWaterResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required daily water requirement field",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+
+          "404": {
+            "description": "Page not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/hydration-entries/": {
+      "post": {
+        "tags": ["Hydration-entries"],
+        "summary": "Add task",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Object for adding",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/AddHydrationEntriesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operation success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/AddHydrationEntriesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    
+    "/api/hydration-entries/today": {
+      "get": {
+        "tags": ["Hydration-entries"],
+        "summary": "Progress drinking water for today and get all hydration-entries tasks for today",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/ProgressForTodayResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Set your daily water requirement",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found(404)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "example": [],
+                  "description": "Empty array"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+
+    "/api/hydration-entries/{entryId}": {
+      "get": {
+        "tags": ["Hydration-entries"],
+        "summary": "Get task hydration-entries by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "entryId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Task with id=entryId found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "Task hydration-entries not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      },
+
+      "delete": {
+        "tags": ["Hydration-entries"],
+        "summary": "Delete task hydration-entries by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "entryId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Task with id=entryId deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "Task hydration-entries not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      },
+
+      "put": {
+        "tags": ["Hydration-entries"],
+        "summary": "Update task hydration-entries by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "entryId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "description": "Object for update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/UpdateHydrationEntriesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/UpdateHydrationEntriesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found(404)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "id entryId not found"
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
             "description": "Server error",
@@ -439,6 +771,7 @@
               "gender": {
                 "type": "string",
                 "description": "Gender (girl || man)",
+                "enum": ["girl", "man"],
                 "example": "girl"
               },
               "avatar": {
@@ -452,6 +785,191 @@
                 "example": "1300"
               }
             }
+          }
+        }
+      },
+
+      "UpdateAvatarUserRequest": {
+        "type": "object",
+        "required": ["_id", "avatar"],
+        "properties": {
+          "avatar": {
+            "type": "file",
+            "format":"binary"
+          }
+        }
+      },
+      "UpdateAvatarUserResponse": {
+        "type": "object",
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "example": "http://avatar_link.com"
+          }
+        }
+      },
+
+      "UpdateDailyWaterRequest": {
+        "type": "object",
+        "properties": {
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Requirement water for one day",
+            "example": "1200"
+          }
+        }
+      },
+      "UpdateDailyWaterResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "658403f367c68f1d83745893"
+          },
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Requirement water for one day",
+            "example": "1200"
+          }
+        }
+      },
+
+      "UpdateHydrationEntriesRequest": {
+        "type": "object",
+        "required": ["entryId"],
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "DateTime of adding task",
+            "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
+            "example": "2023-12-22T17:23:56.789+00:00"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "How many mililitres of the water entries",
+            "example": "1500"
+          }
+        }
+      },
+      "UpdateHydrationEntriesResponse": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "DateTime of adding task",
+            "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
+            "example": "2023-12-22T17:23:56.789+00:00"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "How many mililitres of the water entries",
+            "example": "1500"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner's user id"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Water task id"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Date of creating task"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Date of last updating task"
+          }
+        }
+      },
+
+      "AddHydrationEntriesRequest": {
+        "type": "object",
+        "required": ["time", "amount"],
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "DateTime of adding task",
+            "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
+            "example": "2023-12-22T17:23:56.789+00:00"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "How many mililitres of the water entries",
+            "example": "1700"
+          }
+        }
+      },
+      "AddHydrationEntriesResponse": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "DateTime of adding task",
+            "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
+            "example": "2023-12-22T17:23:56.789+00:00"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "How many mililitres of the water entries",
+            "example": "1700"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner's user id"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Hydration-entries task id"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "DateTime of creating task"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "DateTime of last updating task"
+          }
+        }
+      },
+      
+      "ProgressForTodayResponse": {
+        "type": "object",
+        "properties": {
+          "data": [{
+            "time": {
+              "type": "string",
+              "description": "DateTime of adding task",
+              "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
+              "example": "2023-12-22T17:23:56.789+00:00"
+            },
+            "amount": {
+              "type": "integer",
+              "description": "How many mililitres of the water entries",
+              "example": "1500"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Owner's user id"
+            },
+            "_id": {
+              "type": "string",
+              "description": "Hydration-entries task id"
+            },
+            "createdAt": {
+              "type": "string",
+              "description": "DateTime of creating task"
+            },
+            "updatedAt": {
+              "type": "string",
+              "description": "DateTime of last updating task"
+            }
+          }],
+          "progress": {
+            "type": "integer",
+            "description": "Progress drinking water for today"
           }
         }
       },
