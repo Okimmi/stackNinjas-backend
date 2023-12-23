@@ -8,6 +8,7 @@ const filterFieldsToUpdate = require('./filterFieldsToUpdate');
 const getTodayTime = require('./getTodayTime');
 const getDailyProgress = require('./getDailyProgress');
 const getHashPassword = require('./getHashPassword');
+const getWaterIntakeTime = require('./getWaterIntakeTime');
 
 module.exports = {
   ctrlWrapper,
@@ -20,4 +21,5 @@ module.exports = {
   getTodayTime,
   getDailyProgress,
   getHashPassword,
+  getWaterIntakeTime,
 };
