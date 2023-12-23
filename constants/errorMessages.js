@@ -16,6 +16,7 @@ const errorMessages = {
   dailyWaterRequirement: 'Missing required daily water requirement field',
   dailyWaterRequirementErr:
     'The specified volume of water is harmful to health',
+  dailyWaterRequirementAbsentErr: 'Set your daily water requirement',
   genderEnumErr: `Gender must be one of ${profileSettings.genders.join(
     ' or '
   )}`,

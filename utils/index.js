@@ -6,7 +6,7 @@ const updateImage = require('./updateImage');
 const getImageFilename = require('./getImageFilename');
 const filterFieldsToUpdate = require('./filterFieldsToUpdate');
 const getTodayTime = require('./getTodayTime');
-const getTodayProgress = require('./getTodayProgress');
+const getDailyProgress = require('./getDailyProgress');
 const getHashPassword = require('./getHashPassword');
 
 module.exports = {
@@ -18,6 +18,6 @@ module.exports = {
   getImageFilename,
   filterFieldsToUpdate,
   getTodayTime,
-  getTodayProgress,
+  getDailyProgress,
   getHashPassword,
 };
