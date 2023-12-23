@@ -403,6 +403,71 @@
       }
     },
 
+    "/api/hydration-entries/month-progress": {
+      "get": {
+        "tags": ["Hydration-entries"],
+        "summary": "Progress drinking water for today and get all hydration-entries tasks for today",
+        "security": [{ "Bearer": [] }],
+        "query": {},
+
+        "parameters": [
+          {
+            "in": "query",
+            "name": "month",
+            "schema": {
+              "type": "integer",
+              "required": true,
+              "example": "11"
+            }
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "integer",
+              "required": true,
+              "example": "2023"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/ProgressForMonthResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Set your daily water requirement",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found(404)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "example": [],
+                  "description": "Empty array"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
 
     "/api/hydration-entries/{entryId}": {
       "get": {
@@ -948,6 +1013,19 @@
         }
       },
 
+      "ProgressForMonthResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "Array tasks drinking water for today",
+            "items": {
+              "$ref": "#/components/schemas/DataMonthHydrationEntries"
+            }
+          }
+        }        
+      },
+
       "DataHydrationEntries": {
         "type": "object",
         "properties": {
@@ -981,6 +1059,37 @@
             "type": "string",
             "description": "DateTime of last updating task",
             "example": "2023-12-22T21:32:49.854Z"
+          }
+        }
+      },
+
+      "DataMonthHydrationEntries": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Hydration-entries task id",
+            "example": "658600812106590a0fa53b0f"
+          },
+          "entriesQuantity": {
+            "type": "integer",
+            "description": "DateTime of adding task",
+            "example": "1"
+          },
+          "date": {
+            "type": "string",
+            "description": "How many mililitres of the water entries",
+            "example": "22, November"
+          },
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Owner's user id",
+            "example": "200"
+          },
+          "dailyProgress": {
+            "type": "integer",
+            "description": "DateTime of creating task",
+            "example": "10"
           }
         }
       },
