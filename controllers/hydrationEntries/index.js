@@ -2,7 +2,7 @@ const add = require('./add');
 const getById = require('./getById');
 const updateById = require('./updateById');
 const deleteById = require('./deleteById');
-const getProgress = require('./getProgress');
+const getTodaysProgress = require('./getTodaysProgress');
 const getMonthProgress = require('./getMonthProgress');
 
 module.exports = {
@@ -10,6 +10,6 @@ module.exports = {
   getById,
   updateById,
   deleteById,
-  getProgress,
+  getTodaysProgress,
   getMonthProgress,
 };

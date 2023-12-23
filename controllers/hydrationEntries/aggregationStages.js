@@ -53,12 +53,14 @@ const getEntriesInfoStage = () => ({
     },
     dailyProgress: {
       $toString: {
-        $multiply: [
-          {
-            $divide: ['$entriesSum', '$dailyWaterRequirement'],
-          },
-          100,
-        ],
+        $round: {
+          $multiply: [
+            {
+              $divide: ['$entriesSum', '$dailyWaterRequirement'],
+            },
+            100,
+          ],
+        },
       },
     },
   },
