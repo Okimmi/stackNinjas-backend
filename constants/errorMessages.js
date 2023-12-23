@@ -1,6 +1,8 @@
 const profileSettings = require('./profileSettings');
 
 const errorMessages = {
+  invalidDateErr:
+    'To get monthly progress, you need to specify the year and month',
   emptyStringErr: 'Value cannot be the empty string',
   missingFieldsErr: 'Missing fields',
   emailRegExpErr: 'Email must be letters, digits, dot and @',
