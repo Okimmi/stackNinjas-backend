@@ -18,7 +18,13 @@ const signIn = async (req, res, next) => {
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '30d' });
   const result = await User.findByIdAndUpdate(user._id, { token });
 
-  res.status(200).json({ token: result.token });
+  if (!result) {
+    throw httpError({ status: 404 });
+  }
+
+  res.status(200).json({
+    token: result.token,
+  });
 };
 
 module.exports = ctrlWrapper(signIn);

@@ -49,7 +49,10 @@ const userSchema = new Schema(
     avatar: String,
     gender: {
       type: String,
-      enum: { values: genders, message: genderEnumErr },
+      enum: {
+        values: genders,
+        message: genderEnumErr,
+      },
     },
     name: {
       type: String,
@@ -59,6 +62,10 @@ const userSchema = new Schema(
       type: Number,
       min: [minDailyWaterRequirement, dailyWaterRequirementErr],
       max: [maxDailyWaterRequirement, dailyWaterRequirementErr],
+    },
+    restorePasswordToken: {
+      type: String,
+      default: null,
     },
   },
   { versionKey: false, timestamps: true }
@@ -136,6 +143,11 @@ const updateProfileSchema = Joi.object({
     'object.min': missingFieldsErr,
   });
 
+const updatePasswordSchema = Joi.object({
+  password: passwordSettings.required(),
+  passwordRepeat: passwordRepeatSettings.required(),
+});
+
 const User = model('user', userSchema);
 
 module.exports = {
@@ -144,4 +156,5 @@ module.exports = {
   signInSchema,
   dailyWaterRequirementSchema,
   updateProfileSchema,
+  updatePasswordSchema,
 };

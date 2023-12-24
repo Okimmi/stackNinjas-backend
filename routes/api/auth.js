@@ -6,12 +6,15 @@ const {
   current,
   updateAvatar,
   updateProfile,
+  restorePassword,
+  updatePassword,
 } = require('../../controllers/auth');
 const { validateBody, authenticate, upload } = require('../../middlewares');
 const {
   signUpSchema,
   signInSchema,
   updateProfileSchema,
+  updatePasswordSchema,
 } = require('../../models/user');
 const { notEmptyBodySchema } = require('../../schemas');
 
@@ -38,5 +41,11 @@ router.put(
   updateProfile
 );
 router.patch('/avatars', authenticate, upload.single('avatar'), updateAvatar);
+router.post('/restore-password', restorePassword);
+router.patch(
+  '/restore-password/:restorePasswordToken',
+  validateBody(updatePasswordSchema),
+  updatePassword
+);
 
 module.exports = router;
