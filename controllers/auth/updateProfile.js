@@ -21,7 +21,7 @@ const updateProfile = async (req, res, next) => {
   const result = await User.findByIdAndUpdate(id, {
     $set: set,
     $unset: unset,
-  }).select('-token -password');
+  }).select('-token -restorePasswordToken -password');
 
   res.status(200).json(result);
 };
