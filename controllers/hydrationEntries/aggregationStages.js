@@ -1,12 +1,20 @@
-const getMatchByTimeStage = ({ year, month, owner }) => ({
-  $match: {
-    owner,
-    time: {
-      $gte: new Date(`${year}-${month}`),
-      $lt: new Date(`${year}-${Number(month) + 1}`),
+const getMatchByTimeStage = ({ year, month, owner }) => {
+  const startDate = new Date(`${year}-${month}`);
+  const finalDate =
+    month === '12'
+      ? new Date(`${Number(year) + 1}-${month}`)
+      : new Date(`${year}-${Number(month) + 1}`);
+
+  return {
+    $match: {
+      owner,
+      time: {
+        $gte: startDate,
+        $lt: finalDate,
+      },
     },
-  },
-});
+  };
+};
 
 const getSortByTimeStage = () => ({
   $sort: {
@@ -44,24 +52,29 @@ const getEntriesInfoStage = () => ({
       $month: '$time',
     },
     dailyWaterRequirement: {
-      $toString: {
-        $divide: ['$dailyWaterRequirement', 1000],
-      },
+      $divide: ['$dailyWaterRequirement', 1000],
     },
     entriesQuantity: {
       $size: '$entries',
     },
     dailyProgress: {
-      $toString: {
-        $round: {
-          $multiply: [
-            {
-              $divide: ['$entriesSum', '$dailyWaterRequirement'],
-            },
-            100,
-          ],
+      $multiply: [
+        {
+          $divide: ['$entriesSum', '$dailyWaterRequirement'],
         },
-      },
+        100,
+      ],
+    },
+  },
+});
+
+const getRoundNumbersStage = () => ({
+  $project: {
+    month: 1,
+    entriesQuantity: 1,
+    dailyWaterRequirement: 1,
+    dailyProgress: {
+      $round: ['$dailyProgress'],
     },
   },
 });
@@ -158,10 +171,12 @@ const getAddDailyDataPostfixStage = () => ({
     date: {
       $concat: ['$_id.day', ', ', '$month'],
     },
-    dailyWaterRequirement: { $concat: ['$dailyWaterRequirement', ' L'] },
+    dailyWaterRequirement: {
+      $concat: [{ $toString: '$dailyWaterRequirement' }, ' L'],
+    },
     entriesQuantity: 1,
     dailyProgress: {
-      $concat: ['$dailyProgress', '%'],
+      $concat: [{ $toString: '$dailyProgress' }, '%'],
     },
   },
 });
@@ -199,6 +214,7 @@ module.exports = {
   getSortByTimeStage,
   getGroupByDayStage,
   getEntriesInfoStage,
+  getRoundNumbersStage,
   getAddMonthNameStage,
   getAddDailyDataPostfixStage,
   getAddObjectIdStage,

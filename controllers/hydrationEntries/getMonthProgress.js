@@ -8,6 +8,7 @@ const {
   getAddMonthNameStage,
   getAddDailyDataPostfixStage,
   getAddObjectIdStage,
+  getRoundNumbersStage,
 } = require('./aggregationStages');
 const { errorMessages } = require('../../constants');
 
@@ -15,6 +16,7 @@ const { invalidDateErr } = errorMessages;
 
 const getMonthProgress = async (req, res, next) => {
   const { month, year } = req.query;
+  const { _id: owner } = req.user;
 
   if (!month || !year) {
     throw httpError({
@@ -23,12 +25,11 @@ const getMonthProgress = async (req, res, next) => {
     });
   }
 
-  const { _id: owner } = req.user;
-
   const matchByTimeStage = getMatchByTimeStage({ month, year, owner });
   const sortByTimeStage = getSortByTimeStage();
   const groupByDayStage = getGroupByDayStage();
   const entriesInfoStage = getEntriesInfoStage();
+  const roundNumbersStage = getRoundNumbersStage();
   const addMonthNameStage = getAddMonthNameStage();
   const addDailyDataPostfixStage = getAddDailyDataPostfixStage();
   const addObjectIdStage = getAddObjectIdStage();
@@ -38,6 +39,7 @@ const getMonthProgress = async (req, res, next) => {
     sortByTimeStage,
     groupByDayStage,
     entriesInfoStage,
+    roundNumbersStage,
     addMonthNameStage,
     addDailyDataPostfixStage,
     addObjectIdStage,
