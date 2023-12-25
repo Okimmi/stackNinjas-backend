@@ -24,6 +24,10 @@ const signIn = async (req, res, next) => {
 
   res.status(200).json({
     token: result.token,
+    user: {
+      email: result.email,
+      avatar: result.avatar,
+    },
   });
 };
 
