@@ -18,12 +18,12 @@ const signIn = async (req, res, next) => {
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '30d' });
   const result = await User.findByIdAndUpdate(user._id, { token });
 
+  if (!result) {
+    throw httpError({ status: 404 });
+  }
+
   res.status(200).json({
     token: result.token,
-    user: {
-      email: result.email,
-      avatar: result.avatar,
-    },
   });
 };
 
