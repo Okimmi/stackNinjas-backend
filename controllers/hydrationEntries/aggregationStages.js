@@ -52,22 +52,29 @@ const getEntriesInfoStage = () => ({
       $month: '$time',
     },
     dailyWaterRequirement: {
-      $toString: {
-        $divide: ['$dailyWaterRequirement', 1000],
-      },
+      $divide: ['$dailyWaterRequirement', 1000],
     },
     entriesQuantity: {
       $size: '$entries',
     },
     dailyProgress: {
-      $toString: {
-        $multiply: [
-          {
-            $divide: ['$entriesSum', '$dailyWaterRequirement'],
-          },
-          100,
-        ],
-      },
+      $multiply: [
+        {
+          $divide: ['$entriesSum', '$dailyWaterRequirement'],
+        },
+        100,
+      ],
+    },
+  },
+});
+
+const getRoundNumbersStage = () => ({
+  $project: {
+    month: 1,
+    entriesQuantity: 1,
+    dailyWaterRequirement: 1,
+    dailyProgress: {
+      $round: ['$dailyProgress'],
     },
   },
 });
@@ -164,10 +171,12 @@ const getAddDailyDataPostfixStage = () => ({
     date: {
       $concat: ['$_id.day', ', ', '$month'],
     },
-    dailyWaterRequirement: { $concat: ['$dailyWaterRequirement', ' L'] },
+    dailyWaterRequirement: {
+      $concat: [{ $toString: '$dailyWaterRequirement' }, ' L'],
+    },
     entriesQuantity: 1,
     dailyProgress: {
-      $concat: ['$dailyProgress', '%'],
+      $concat: [{ $toString: '$dailyProgress' }, '%'],
     },
   },
 });
@@ -205,6 +214,7 @@ module.exports = {
   getSortByTimeStage,
   getGroupByDayStage,
   getEntriesInfoStage,
+  getRoundNumbersStage,
   getAddMonthNameStage,
   getAddDailyDataPostfixStage,
   getAddObjectIdStage,
