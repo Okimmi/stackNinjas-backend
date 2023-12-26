@@ -60,6 +60,7 @@ const userSchema = new Schema(
     },
     dailyWaterRequirement: {
       type: Number,
+      default: 2000,
       min: [minDailyWaterRequirement, dailyWaterRequirementErr],
       max: [maxDailyWaterRequirement, dailyWaterRequirementErr],
     },
