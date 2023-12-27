@@ -770,7 +770,7 @@
           "name": {
             "type": "string",
             "description": "User's name",
-            "example": "User11_1"
+            "example": "User11_1_updateName"
           },
           "email": {
             "type": "string",
@@ -783,17 +783,17 @@
             "type": "string",
             "description": "User's gender: [\"girl\", \"man\"]",
             "enum": ["girl", "man"],
-            "example": "girl"
+            "example": "man"
           },
           "password": {
             "type": "string",
             "description": "User's password",
-            "example": "12345678"
+            "example": "user-11.password12345678"
           },
           "passwordRepeat": {
             "type": "string",
             "description": "User's repeat password",
-            "example": "12345678"
+            "example": "user-11.password12345678"
           },
           "passwordOutdated": {
             "type": "string",
@@ -816,7 +816,7 @@
               "name": {
                 "type": "string",
                 "description": "User's name",
-                "example": "User11_1"
+                "example": "User11_1_updateName"
               },
               "email": {
                 "type": "string",
@@ -829,12 +829,12 @@
                 "type": "string",
                 "description": "Gender (girl || man)",
                 "enum": ["girl", "man"],
-                "example": "girl"
+                "example": "man"
               },
               "avatar": {
                 "type": "string",
                 "description": "URL for users avatar image",
-                "example": "http://avatar.com"
+                "example": "http://res.cloudinary.com/dk3glcvlk/image/upload/v1703232977/avatars/my_avatar_image.png"
               },
               "dailyWaterRequirement": {
                 "type": "integer",
