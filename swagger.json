@@ -1124,6 +1124,11 @@
             "type": "integer",
             "description": "How many mililitres of the water entries",
             "example": "1700"
+          },
+          "dailyWaterRequirement":{
+            "type": "integer",
+            "description": "Daily normal water",
+            "example": "2700"
           }
         }
       },
