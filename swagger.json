@@ -723,42 +723,42 @@
       "CurrentUserResponse": {
         "type": "object",
         "properties": {
-          "user": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "description": "User's id",
-                "example": "658403f367c68f1d83745893"
-              },
-              "name": {
-                "type": "string",
-                "description": "User's name",
-                "example": "User11"
-              },
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email",
-                "example": "user11@mail.com",
-                "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
-              },
-              "gender": {
-                "type": "string",
-                "description": "Gender (girl || man)",
-                "example": "girl"
-              },
-              "avatar": {
-                "type": "string",
-                "description": "URL for users avatar image",
-                "example": "http://avatar_link.com"
-              },
-              "dailyWaterRequirement": {
-                "type": "integer",
-                "description": "Requirement water for one day",
-                "example": "1500"
-              }
-            }
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "658403f367c68f1d83745893"
+          },
+          "restorePasswordToken": {
+            "type": "string",
+            "description": "Restore password token",
+            "example": null
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "User11"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user11@mail.com",
+            "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+          },
+          "gender": {
+            "type": "string",
+            "description": "Gender (girl || man)",
+            "example": "girl"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "URL for users avatar image",
+            "example": "http://avatar_link.com"
+          },
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Requirement water for one day",
+            "example": "1500"
           }
         }
       },
