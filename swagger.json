@@ -962,6 +962,11 @@
             "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
             "example": "2023-12-22T17:23:56.789Z"
           },
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Daily normal water",
+            "example": "1200"
+          },
           "amount": {
             "type": "integer",
             "description": "How many mililitres of the water entries",
