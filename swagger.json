@@ -708,6 +708,11 @@
                 "format": "email",
                 "example": "user11@mail.com",
                 "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "Link image users avatar",
+                "example": "http://res.cloudinary.com/dk3glcvlk/image/upload/v1703232977/avatars/my_avatar_image.png"
               }
             }
           }
