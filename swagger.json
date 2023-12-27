@@ -731,11 +731,6 @@
                 "description": "User's id",
                 "example": "658403f367c68f1d83745893"
               },
-              "token": {
-                "type": "string",
-                "description": "Access token",
-                "example": "token"
-              },
               "name": {
                 "type": "string",
                 "description": "User's name",
@@ -747,11 +742,6 @@
                 "format": "email",
                 "example": "user11@mail.com",
                 "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
-              },
-              "password": {
-                "type": "string",
-                "description": "User's password",
-                "example": "user-11.password12345678"
               },
               "gender": {
                 "type": "string",
