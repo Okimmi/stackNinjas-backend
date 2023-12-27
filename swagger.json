@@ -697,7 +697,7 @@
           "token": {
             "type": "string",
             "description": "Access token",
-            "example": "token"
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODQwM2YzNjdjNjhmMWQ4Mzc0NTg5MyIsImlhdCI6MTcwMzY2MzU4NywiZXhwIjoxNzA2MjU1NTg3fQ.IJ3PeR6jLf-Lub_rvo4CorBheFFG3VnQ4GZYGo4IRcs"
           },
           "user": {
             "type": "object",
@@ -708,6 +708,11 @@
                 "format": "email",
                 "example": "user11@mail.com",
                 "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "Link image users avatar",
+                "example": "http://res.cloudinary.com/dk3glcvlk/image/upload/v1703232977/avatars/my_avatar_image.png"
               }
             }
           }
@@ -718,60 +723,16 @@
       "CurrentUserResponse": {
         "type": "object",
         "properties": {
-          "user": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "description": "User's id",
-                "example": "658403f367c68f1d83745893"
-              },
-              "token": {
-                "type": "string",
-                "description": "Access token",
-                "example": "token"
-              },
-              "name": {
-                "type": "string",
-                "description": "User's name",
-                "example": "User11"
-              },
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email",
-                "example": "user11@mail.com",
-                "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
-              },
-              "password": {
-                "type": "string",
-                "description": "User's password",
-                "example": "user-11.password12345678"
-              },
-              "gender": {
-                "type": "string",
-                "description": "Gender (girl || man)",
-                "example": "girl"
-              },
-              "avatar": {
-                "type": "string",
-                "description": "URL for users avatar image",
-                "example": "http://avatar_link.com"
-              },
-              "dailyWaterRequirement": {
-                "type": "integer",
-                "description": "Requirement water for one day",
-                "example": "1500"
-              }
-            }
-          }
-        }
-      },
-
-      "UpdateUserRequest": {
-        "type": "object",
-        "required": ["_id"],
-        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "658403f367c68f1d83745893"
+          },
+          "restorePasswordToken": {
+            "type": "string",
+            "description": "Restore password token",
+            "example": null
+          },
           "name": {
             "type": "string",
             "description": "User's name",
@@ -786,19 +747,53 @@
           },
           "gender": {
             "type": "string",
+            "description": "Gender (girl || man)",
+            "example": "girl"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "URL for users avatar image",
+            "example": "http://avatar_link.com"
+          },
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Requirement water for one day",
+            "example": "1200"
+          }
+        }
+      },
+
+      "UpdateUserRequest": {
+        "type": "object",
+        "required": ["_id"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "User11_1_updateName"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user11@mail.com",
+            "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+          },
+          "gender": {
+            "type": "string",
             "description": "User's gender: [\"girl\", \"man\"]",
             "enum": ["girl", "man"],
-            "example": "girl"
+            "example": "man"
           },
           "password": {
             "type": "string",
             "description": "User's password",
-            "example": "12345678"
+            "example": "user-11.password12345678"
           },
           "passwordRepeat": {
             "type": "string",
             "description": "User's repeat password",
-            "example": "12345678"
+            "example": "user-11.password12345678"
           },
           "passwordOutdated": {
             "type": "string",
@@ -810,53 +805,48 @@
       "UpdateUserResponse": {
         "type": "object",
         "properties": {
-          "user": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "description": "User's id",
-                "example": "658403f367c68f1d83745893"
-              },
-              "name": {
-                "type": "string",
-                "description": "User's name",
-                "example": "User11_1"
-              },
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email",
-                "example": "user11@mail.com",
-                "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
-              },
-              "gender": {
-                "type": "string",
-                "description": "Gender (girl || man)",
-                "enum": ["girl", "man"],
-                "example": "girl"
-              },
-              "avatar": {
-                "type": "string",
-                "description": "URL for users avatar image",
-                "example": "http://avatar.com"
-              },
-              "dailyWaterRequirement": {
-                "type": "integer",
-                "description": "Requirement water for one day",
-                "example": "1200"
-              },
-              "createdAt": {
-                "type": "string",
-                "description": "DateTime of creating user",
-                "example": "2023-12-21T09:22:59.612Z"
-              },
-              "updatedAt": {
-                "type": "string",
-                "description": "DateTime of last updating user",
-                "example": "2023-12-22T19:53:52.702Z"
-              }
-            }
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "658403f367c68f1d83745893"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "User11_1_updateName"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user11@mail.com",
+            "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+          },
+          "gender": {
+            "type": "string",
+            "description": "Gender (girl || man)",
+            "enum": ["girl", "man"],
+            "example": "man"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "URL for users avatar image",
+            "example": "http://res.cloudinary.com/dk3glcvlk/image/upload/v1703232977/avatars/my_avatar_image.png"
+          },
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Requirement water for one day",
+            "example": "1200"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "DateTime of creating user",
+            "example": "2023-12-21T09:22:59.612Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "DateTime of last updating user",
+            "example": "2023-12-22T19:53:52.702Z"
           }
         }
       },
@@ -972,6 +962,11 @@
             "pattern": "^(202[3-9]|20[3-9][0-9])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
             "example": "2023-12-22T17:23:56.789Z"
           },
+          "dailyWaterRequirement": {
+            "type": "integer",
+            "description": "Daily normal water",
+            "example": "1200"
+          },
           "amount": {
             "type": "integer",
             "description": "How many mililitres of the water entries",
@@ -1014,16 +1009,11 @@
       },
 
       "ProgressForMonthResponse": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "description": "Array tasks drinking water for today",
-            "items": {
-              "$ref": "#/components/schemas/DataMonthHydrationEntries"
-            }
-          }
-        }        
+        "type": "array",
+        "description": "Array tasks drinking water for today",
+        "items": {
+          "$ref": "#/components/schemas/DataMonthHydrationEntries"
+        }
       },
 
       "DataHydrationEntries": {
@@ -1074,7 +1064,7 @@
           "entriesQuantity": {
             "type": "integer",
             "description": "DateTime of adding task",
-            "example": "1"
+            "example": "4"
           },
           "date": {
             "type": "string",
@@ -1082,14 +1072,14 @@
             "example": "22, November"
           },
           "dailyWaterRequirement": {
-            "type": "integer",
+            "type": "string",
             "description": "Owner's user id",
-            "example": "200"
+            "example": "1.2 L"
           },
           "dailyProgress": {
-            "type": "integer",
+            "type": "string",
             "description": "DateTime of creating task",
-            "example": "10"
+            "example": "550%"
           }
         }
       },
@@ -1134,6 +1124,11 @@
             "type": "integer",
             "description": "How many mililitres of the water entries",
             "example": "1700"
+          },
+          "dailyWaterRequirement":{
+            "type": "integer",
+            "description": "Daily normal water",
+            "example": "2700"
           }
         }
       },
