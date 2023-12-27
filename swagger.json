@@ -736,7 +736,7 @@
           "name": {
             "type": "string",
             "description": "User's name",
-            "example": "User11"
+            "example": "User11_1"
           },
           "email": {
             "type": "string",
@@ -758,7 +758,7 @@
           "dailyWaterRequirement": {
             "type": "integer",
             "description": "Requirement water for one day",
-            "example": "1500"
+            "example": "1200"
           }
         }
       },
