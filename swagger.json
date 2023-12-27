@@ -1009,16 +1009,11 @@
       },
 
       "ProgressForMonthResponse": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "description": "Array tasks drinking water for today",
-            "items": {
-              "$ref": "#/components/schemas/DataMonthHydrationEntries"
-            }
-          }
-        }        
+        "type": "array",
+        "description": "Array tasks drinking water for today",
+        "items": {
+          "$ref": "#/components/schemas/DataMonthHydrationEntries"
+        }
       },
 
       "DataHydrationEntries": {
@@ -1069,7 +1064,7 @@
           "entriesQuantity": {
             "type": "integer",
             "description": "DateTime of adding task",
-            "example": "1"
+            "example": "4"
           },
           "date": {
             "type": "string",
@@ -1077,14 +1072,14 @@
             "example": "22, November"
           },
           "dailyWaterRequirement": {
-            "type": "integer",
+            "type": "string",
             "description": "Owner's user id",
-            "example": "200"
+            "example": "1.2 L"
           },
           "dailyProgress": {
-            "type": "integer",
+            "type": "string",
             "description": "DateTime of creating task",
-            "example": "10"
+            "example": "550%"
           }
         }
       },
