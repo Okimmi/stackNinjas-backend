@@ -697,7 +697,7 @@
           "token": {
             "type": "string",
             "description": "Access token",
-            "example": "token"
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODQwM2YzNjdjNjhmMWQ4Mzc0NTg5MyIsImlhdCI6MTcwMzY2MzU4NywiZXhwIjoxNzA2MjU1NTg3fQ.IJ3PeR6jLf-Lub_rvo4CorBheFFG3VnQ4GZYGo4IRcs"
           },
           "user": {
             "type": "object",
