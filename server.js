@@ -27,6 +27,17 @@ bot.onText(/\/start (.+)/, async (msg, match) => {
   const commandParam = match[1];
 
   await User.findByIdAndUpdate(commandParam, { chatId: userId });
+  console.log(`User ${commandParam} started bot`);
+});
+
+bot.onText(/\/stop/, async (msg) => {
+  const chatId = msg.chat.id;
+
+  const user = await User.findOneAndUpdate({ chatId }, { chatId: null });
+
+  if (user) {
+    console.log(`User ${user._id} stopped bot`);
+  }
 });
 
 cron.schedule(
