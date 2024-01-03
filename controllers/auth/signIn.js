@@ -22,12 +22,13 @@ const signIn = async (req, res, next) => {
     throw httpError({ status: 404 });
   }
 
+  result.token = undefined;
+  result.password = undefined;
+  result.restorePasswordToken = undefined;
+
   res.status(200).json({
-    token: result.token,
-    user: {
-      email: result.email,
-      avatar: result.avatar,
-    },
+    token: token,
+    user: result,
   });
 };
 
