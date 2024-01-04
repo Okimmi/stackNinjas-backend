@@ -720,6 +720,21 @@
           "user": {
             "type": "object",
             "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "658403f367c68f1d83745893"
+              },
+              "chatId": {
+                "type": "string",
+                "description": "User’s id for telegram chat bot.",
+                "example": "123456789"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "user11"
+              },
               "email": {
                 "type": "string",
                 "description": "User's email",
@@ -731,6 +746,27 @@
                 "type": "string",
                 "description": "Link image users avatar",
                 "example": "http://res.cloudinary.com/dk3glcvlk/image/upload/v1703232977/avatars/my_avatar_image.png"
+              },
+              "gender": {
+                "type": "string",
+                "description": "Gender (girl || man)",
+                "enum": ["girl", "man"],
+                "example": "man"
+              },
+              "dailyWaterRequirement": {
+                "type": "integer",
+                "description": "Requirement water for one day",
+                "example": "1200"
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "DateTime of creating user",
+                "example": "2023-12-21T09:22:59.612Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "DateTime of last updating user",
+                "example": "2023-12-22T19:53:52.702Z"
               }
             }
           }
