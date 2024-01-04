@@ -1,7 +1,7 @@
-const { Schema, model } = require("mongoose");
-const Joi = require("joi");
-const hooks = require("./hooks");
-const { errorMessages, regExp, profileSettings } = require("../constants");
+const { Schema, model } = require('mongoose');
+const Joi = require('joi');
+const hooks = require('./hooks');
+const { errorMessages, regExp, profileSettings } = require('../constants');
 
 const { emailRegExp, notEmptyValueRegExp } = regExp;
 const { handleMongooseError, preUpdate } = hooks;
@@ -19,8 +19,6 @@ const {
   passwordRequiredErr,
   passwordMinLengthErr,
   passwordMaxLengthErr,
-  passwordRepeatErr,
-  passwordRepeatRequiredErr,
   genderEnumErr,
   dailyWaterRequirementErr,
   dailyWaterRequirement,
@@ -46,9 +44,13 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    avatar: String,
+    avatar: {
+      type: String,
+      default: '',
+    },
     gender: {
       type: String,
+      default: null,
       enum: {
         values: genders,
         message: genderEnumErr,
@@ -56,6 +58,7 @@ const userSchema = new Schema(
     },
     name: {
       type: String,
+      default: '',
       match: [notEmptyValueRegExp, emptyStringErr],
     },
     dailyWaterRequirement: {
@@ -68,18 +71,18 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    chatId: { type: String },
+    chatId: { type: String, default: '' },
   },
   { versionKey: false, timestamps: true }
 );
 
-userSchema.pre("findOneAndUpdate", preUpdate);
-userSchema.post("save", handleMongooseError);
-userSchema.post("findOneAndUpdate", handleMongooseError);
+userSchema.pre('findOneAndUpdate', preUpdate);
+userSchema.post('save', handleMongooseError);
+userSchema.post('findOneAndUpdate', handleMongooseError);
 
 const emailSettings = Joi.string().pattern(emailRegExp).messages({
-  "any.required": emailRequiredErr,
-  "string.pattern.base": emailRegExpErr,
+  'any.required': emailRequiredErr,
+  'string.pattern.base': emailRegExpErr,
 });
 
 const passwordSettings = Joi.string()
@@ -87,23 +90,15 @@ const passwordSettings = Joi.string()
   .min(passMinLength)
   .max(passMaxLength)
   .messages({
-    "any.required": passwordRequiredErr,
-    "string.min": passwordMinLengthErr,
-    "string.max": passwordMaxLengthErr,
-    "string.pattern.base": emptyStringErr,
-  });
-
-const passwordRepeatSettings = Joi.string()
-  .valid(Joi.ref("password"))
-  .messages({
-    "any.required": passwordRepeatRequiredErr,
-    "any.only": passwordRepeatErr,
+    'any.required': passwordRequiredErr,
+    'string.min': passwordMinLengthErr,
+    'string.max': passwordMaxLengthErr,
+    'string.pattern.base': emptyStringErr,
   });
 
 const signUpSchema = Joi.object({
   email: emailSettings.required(),
   password: passwordSettings.required(),
-  passwordRepeat: passwordRepeatSettings.required(),
 });
 
 const signInSchema = Joi.object({
@@ -117,40 +112,35 @@ const dailyWaterRequirementSchema = Joi.object({
     .max(maxDailyWaterRequirement)
     .required()
     .messages({
-      "any.required": dailyWaterRequirement,
-      "number.min": dailyWaterRequirementErr,
-      "number.max": dailyWaterRequirementErr,
+      'any.required': dailyWaterRequirement,
+      'number.min': dailyWaterRequirementErr,
+      'number.max': dailyWaterRequirementErr,
     }),
 });
 
 const updateProfileSchema = Joi.object({
   password: passwordSettings,
-  passwordRepeat: Joi.string().when("password", {
-    is: String,
-    then: passwordRepeatSettings.required(),
-  }),
   passwordOutdated: passwordSettings,
   gender: Joi.string()
     .valid(...genders)
     .messages({
-      "any.only": genderEnumErr,
+      'any.only': genderEnumErr,
     }),
   name: Joi.string().pattern(notEmptyValueRegExp).messages({
-    "string.empty": emptyStringErr,
+    'string.empty': emptyStringErr,
   }),
   email: emailSettings,
 })
   .min(1)
   .messages({
-    "object.min": missingFieldsErr,
+    'object.min': missingFieldsErr,
   });
 
 const updatePasswordSchema = Joi.object({
   password: passwordSettings.required(),
-  passwordRepeat: passwordRepeatSettings.required(),
 });
 
-const User = model("user", userSchema);
+const User = model('user', userSchema);
 
 module.exports = {
   User,

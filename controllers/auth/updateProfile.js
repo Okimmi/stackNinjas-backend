@@ -3,6 +3,7 @@ const {
   ctrlWrapper,
   filterFieldsToUpdate,
   getHashPassword,
+  getResponse,
 } = require('../../utils');
 
 const updateProfile = async (req, res, next) => {
@@ -23,7 +24,9 @@ const updateProfile = async (req, res, next) => {
     $unset: unset,
   }).select('-token -restorePasswordToken -password');
 
-  res.status(200).json(result);
+  const response = getResponse({ reqBody: req.body, result });
+
+  res.status(200).json(response);
 };
 
 module.exports = ctrlWrapper(updateProfile);

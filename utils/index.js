@@ -10,6 +10,7 @@ const getDailyProgress = require('./getDailyProgress');
 const getHashPassword = require('./getHashPassword');
 const getWaterIntakeTime = require('./getWaterIntakeTime');
 const sendEmail = require('./sendEmail');
+const getResponse = require('./getResponse');
 
 module.exports = {
   ctrlWrapper,
@@ -24,4 +25,5 @@ module.exports = {
   getHashPassword,
   getWaterIntakeTime,
   sendEmail,
+  getResponse,
 };

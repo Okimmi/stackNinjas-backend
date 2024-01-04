@@ -34,7 +34,7 @@ router.post(
 );
 router.post('/signout', authenticate, signOut);
 router.get('/current', authenticate, current);
-router.put(
+router.patch(
   '/profile',
   authenticate,
   validateBody(updateProfileSchema),
