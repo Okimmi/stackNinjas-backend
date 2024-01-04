@@ -142,6 +142,44 @@
       }
     },
 
+    "/api/auth/restore-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Restore password",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "User's email for restore password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/RestorePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password recovery email sent",
+            "content": {}
+          },
+          "400": {
+            "description": "Email not found",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    }, 
+
     "/api/auth/current": {
       "get": {
         "tags": ["Auth"],
@@ -772,6 +810,19 @@
         }
       },
 
+      "RestorePasswordRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user11@mail.com",
+            "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+          }
+        }
+      },
       
       "CurrentUserResponse": {
         "type": "object",
