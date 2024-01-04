@@ -25,8 +25,7 @@
   "tags": [
     { "name": "Auth", "description": "Authorization endpoints" },
     { "name": "Aquatrack", "description": "Aquatrack endpoints" },
-    { "name": "Hydration-entries", "description": "Hydration-entries endpoints" },
-    { "name": "Api-docs", "description": "Prodject documentation endpoints" }
+    { "name": "Hydration-entries", "description": "Hydration-entries endpoints" }
   ],
 
   "paths": {
@@ -534,7 +533,7 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
+            "description": "Id hydration-entries not found",
             "content": {}
           },
           "404": {
