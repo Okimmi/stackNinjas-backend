@@ -303,6 +303,52 @@
       }
     },
 
+    "/restore-password/{restorePasswordToken}": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Update password",
+        "parameters": [
+          {
+            "name": "restorePasswordToken",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "658600812106590a0fa53b0f"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Password update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/UpdatePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password updated successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "Page not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
     "/api/aquatrack/daily-water-requirement": {
       "patch": {
         "tags": ["Aquatrack"],
@@ -823,7 +869,7 @@
           }
         }
       },
-      
+
       "CurrentUserResponse": {
         "type": "object",
         "properties": {
@@ -930,6 +976,18 @@
           "avatar": {
             "type": "string",
             "example": "http://avatar_link.com"
+          }
+        }
+      },
+
+      "UpdatePasswordRequest": {
+        "type": "object",
+        "required": ["password"],
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "user-11.password12345678"
           }
         }
       },
