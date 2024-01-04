@@ -173,7 +173,7 @@
     },
 
     "/api/auth/profile": {
-      "put": {
+      "patch": {
         "tags": ["Auth"],
         "summary": "Update user's data",
         "parameters": [],
@@ -782,10 +782,10 @@
             "description": "User's id",
             "example": "658403f367c68f1d83745893"
           },
-          "restorePasswordToken": {
+          "chatId": {
             "type": "string",
-            "description": "Restore password token",
-            "example": null
+            "description": "User’s id for telegram chat bot.",
+            "example": "123456789"
           },
           "name": {
             "type": "string",
@@ -819,7 +819,6 @@
 
       "UpdateUserRequest": {
         "type": "object",
-        "required": ["_id"],
         "properties": {
           "name": {
             "type": "string",
@@ -838,32 +837,12 @@
             "description": "User's gender: [\"girl\", \"man\"]",
             "enum": ["girl", "man"],
             "example": "man"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "user-11.password12345678"
-          },
-          "passwordRepeat": {
-            "type": "string",
-            "description": "User's repeat password",
-            "example": "user-11.password12345678"
-          },
-          "passwordOutdated": {
-            "type": "string",
-            "description": "User's old password",
-            "example": "user-11.password12345678"
           }
         }
       },
       "UpdateUserResponse": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "string",
-            "description": "User's id",
-            "example": "658403f367c68f1d83745893"
-          },
           "name": {
             "type": "string",
             "description": "User's name",
@@ -881,26 +860,6 @@
             "description": "Gender (girl || man)",
             "enum": ["girl", "man"],
             "example": "man"
-          },
-          "avatar": {
-            "type": "string",
-            "description": "URL for users avatar image",
-            "example": "http://res.cloudinary.com/dk3glcvlk/image/upload/v1703232977/avatars/my_avatar_image.png"
-          },
-          "dailyWaterRequirement": {
-            "type": "integer",
-            "description": "Requirement water for one day",
-            "example": "1200"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "DateTime of creating user",
-            "example": "2023-12-21T09:22:59.612Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "DateTime of last updating user",
-            "example": "2023-12-22T19:53:52.702Z"
           }
         }
       },
