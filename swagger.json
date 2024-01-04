@@ -303,7 +303,7 @@
       }
     },
 
-    "/restore-password/{restorePasswordToken}": {
+    "/api/auth/restore-password/{restorePasswordToken}": {
       "patch": {
         "tags": ["Auth"],
         "summary": "Update password",
