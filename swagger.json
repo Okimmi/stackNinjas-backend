@@ -604,44 +604,14 @@
           }
         }
       }
-    },
-
-
-    "/api/api-docs": {
-      "get": {
-        "tags": ["Api-docs"],
-        "summary": "Swagger endpoints documentation",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Succesful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#components/schemas/DocsResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          },
-          "500": {
-            "description": "Server error",
-            "content": {}
-          }
-        }
-      }
     }
-
-
   },
+
   "components": {
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": ["email", "password", "passwordRepeat"],
+        "required": ["email", "password" ],
         "properties": {
           "email": {
             "type": "string",
@@ -654,21 +624,69 @@
             "type": "string",
             "description": "User's password",
             "example": "user-11.password12345678"
-          },
-          "passwordRepeat": {
-            "type": "string",
-            "description": "User's repeat password",
-            "example": "user-11.password12345678"
           }
-
         }
       },
       "RegistrationResponse": {
         "type": "object",
         "properties": {
-          "message": {
-            "type": "string",
-            "example": "Registration success"
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "658403f367c68f1d83745893"
+              },
+              "token": {
+                "type": "string",
+                "description": "User's token after sign-in",
+                "example": null
+              },
+              "chatId": {
+                "type": "string",
+                "description": "User’s id for telegram chat bot.",
+                "example": ""
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": ""
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email",
+                "example": "user11@mail.com",
+                "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+              },
+              "gender": {
+                "type": "string",
+                "description": "Gender (girl || man)",
+                "enum": ["girl", "man"],
+                "example": null
+              },
+              "avatar": {
+                "type": "string",
+                "description": "URL for users avatar image",
+                "example": ""
+              },
+              "dailyWaterRequirement": {
+                "type": "integer",
+                "description": "Requirement water for one day",
+                "example": "2000"
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "DateTime of creating user",
+                "example": "2023-12-21T09:22:59.612Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "DateTime of last updating user",
+                "example": "2023-12-22T19:53:52.702Z"
+              }
+            }
           }
         }
       },
@@ -1129,16 +1147,6 @@
             "type": "integer",
             "description": "Daily normal water",
             "example": "2700"
-          }
-        }
-      },
-
-      "DocsResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Html swagger document"
           }
         }
       }
