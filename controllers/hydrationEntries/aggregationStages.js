@@ -4,8 +4,7 @@ const getMatchByTimeStage = ({ year, month, owner }) => {
     month === '12'
       ? new Date(`${Number(year) + 1}-1`)
       : new Date(`${year}-${Number(month) + 1}`);
-  console.log('startDate', startDate);
-  console.log('finalDate', finalDate);
+
   return {
     $match: {
       owner,
