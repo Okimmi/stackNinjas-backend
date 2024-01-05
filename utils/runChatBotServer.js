@@ -28,8 +28,6 @@ const runChatBotServer = () => {
     }
   );
 
-  sendTelegramReminder(bot);
-
   cron.schedule(
     "0 9-21 * * *",
     () => {
