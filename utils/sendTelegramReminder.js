@@ -2,7 +2,7 @@ const moment = require("moment-timezone");
 const getTelegramUsers = require("./getTelegramUsers");
 const { HydrationEntry } = require("../models/hydrationEntry");
 
-const { FRONTEND_URL } = process.env;
+const { FRONTEND_BASE_URL } = process.env;
 
 function sendTelegramReminder(bot) {
   const oneHourAgo = moment().tz("Etc/GMT").subtract(1, "hour");
@@ -12,7 +12,7 @@ function sendTelegramReminder(bot) {
       [
         {
           text: "💧 Click to add water 💧",
-          url: FRONTEND_URL,
+          url: FRONTEND_BASE_URL,
         },
       ],
     ],
