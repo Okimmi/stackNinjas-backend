@@ -25,8 +25,7 @@
   "tags": [
     { "name": "Auth", "description": "Authorization endpoints" },
     { "name": "Aquatrack", "description": "Aquatrack endpoints" },
-    { "name": "Hydration-entries", "description": "Hydration-entries endpoints" },
-    { "name": "Api-docs", "description": "Prodject documentation endpoints" }
+    { "name": "Hydration-entries", "description": "Hydration-entries endpoints" }
   ],
 
   "paths": {
@@ -143,6 +142,44 @@
       }
     },
 
+    "/api/auth/restore-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Restore password",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "User's email for restore password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/RestorePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password recovery email sent",
+            "content": {}
+          },
+          "400": {
+            "description": "Email not found",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    }, 
+
     "/api/auth/current": {
       "get": {
         "tags": ["Auth"],
@@ -173,7 +210,7 @@
     },
 
     "/api/auth/profile": {
-      "put": {
+      "patch": {
         "tags": ["Auth"],
         "summary": "Update user's data",
         "parameters": [],
@@ -256,6 +293,52 @@
           },
           "404": {
             "description": "File is absent",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/auth/restore-password/{restorePasswordToken}": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Update password",
+        "parameters": [
+          {
+            "name": "restorePasswordToken",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "658600812106590a0fa53b0f"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Password update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/UpdatePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password updated successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "Page not found",
             "content": {}
           },
           "500": {
@@ -534,7 +617,7 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
+            "description": "Id hydration-entries not found",
             "content": {}
           },
           "404": {
@@ -604,44 +687,14 @@
           }
         }
       }
-    },
-
-
-    "/api/api-docs": {
-      "get": {
-        "tags": ["Api-docs"],
-        "summary": "Swagger endpoints documentation",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Succesful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#components/schemas/DocsResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          },
-          "500": {
-            "description": "Server error",
-            "content": {}
-          }
-        }
-      }
     }
-
-
   },
+
   "components": {
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": ["email", "password", "passwordRepeat"],
+        "required": ["email", "password" ],
         "properties": {
           "email": {
             "type": "string",
@@ -654,21 +707,69 @@
             "type": "string",
             "description": "User's password",
             "example": "user-11.password12345678"
-          },
-          "passwordRepeat": {
-            "type": "string",
-            "description": "User's repeat password",
-            "example": "user-11.password12345678"
           }
-
         }
       },
       "RegistrationResponse": {
         "type": "object",
         "properties": {
-          "message": {
-            "type": "string",
-            "example": "Registration success"
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "658403f367c68f1d83745893"
+              },
+              "token": {
+                "type": "string",
+                "description": "User's token after sign-in",
+                "example": null
+              },
+              "chatId": {
+                "type": "string",
+                "description": "User’s id for telegram chat bot.",
+                "example": ""
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": ""
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email",
+                "example": "user11@mail.com",
+                "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+              },
+              "gender": {
+                "type": "string",
+                "description": "Gender (girl || man)",
+                "enum": ["girl", "man"],
+                "example": null
+              },
+              "avatar": {
+                "type": "string",
+                "description": "URL for users avatar image",
+                "example": ""
+              },
+              "dailyWaterRequirement": {
+                "type": "integer",
+                "description": "Requirement water for one day",
+                "example": "2000"
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "DateTime of creating user",
+                "example": "2023-12-21T09:22:59.612Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "DateTime of last updating user",
+                "example": "2023-12-22T19:53:52.702Z"
+              }
+            }
           }
         }
       },
@@ -702,6 +803,21 @@
           "user": {
             "type": "object",
             "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "658403f367c68f1d83745893"
+              },
+              "chatId": {
+                "type": "string",
+                "description": "User’s id for telegram chat bot.",
+                "example": "123456789"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "user11"
+              },
               "email": {
                 "type": "string",
                 "description": "User's email",
@@ -713,13 +829,47 @@
                 "type": "string",
                 "description": "Link image users avatar",
                 "example": "http://res.cloudinary.com/dk3glcvlk/image/upload/v1703232977/avatars/my_avatar_image.png"
+              },
+              "gender": {
+                "type": "string",
+                "description": "Gender (girl || man)",
+                "enum": ["girl", "man"],
+                "example": "man"
+              },
+              "dailyWaterRequirement": {
+                "type": "integer",
+                "description": "Requirement water for one day",
+                "example": "1200"
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "DateTime of creating user",
+                "example": "2023-12-21T09:22:59.612Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "DateTime of last updating user",
+                "example": "2023-12-22T19:53:52.702Z"
               }
             }
           }
         }
       },
 
-      
+      "RestorePasswordRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user11@mail.com",
+            "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+          }
+        }
+      },
+
       "CurrentUserResponse": {
         "type": "object",
         "properties": {
@@ -728,10 +878,10 @@
             "description": "User's id",
             "example": "658403f367c68f1d83745893"
           },
-          "restorePasswordToken": {
+          "chatId": {
             "type": "string",
-            "description": "Restore password token",
-            "example": null
+            "description": "User’s id for telegram chat bot.",
+            "example": "123456789"
           },
           "name": {
             "type": "string",
@@ -765,7 +915,6 @@
 
       "UpdateUserRequest": {
         "type": "object",
-        "required": ["_id"],
         "properties": {
           "name": {
             "type": "string",
@@ -784,32 +933,12 @@
             "description": "User's gender: [\"girl\", \"man\"]",
             "enum": ["girl", "man"],
             "example": "man"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "user-11.password12345678"
-          },
-          "passwordRepeat": {
-            "type": "string",
-            "description": "User's repeat password",
-            "example": "user-11.password12345678"
-          },
-          "passwordOutdated": {
-            "type": "string",
-            "description": "User's old password",
-            "example": "user-11.password12345678"
           }
         }
       },
       "UpdateUserResponse": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "string",
-            "description": "User's id",
-            "example": "658403f367c68f1d83745893"
-          },
           "name": {
             "type": "string",
             "description": "User's name",
@@ -827,26 +956,6 @@
             "description": "Gender (girl || man)",
             "enum": ["girl", "man"],
             "example": "man"
-          },
-          "avatar": {
-            "type": "string",
-            "description": "URL for users avatar image",
-            "example": "http://res.cloudinary.com/dk3glcvlk/image/upload/v1703232977/avatars/my_avatar_image.png"
-          },
-          "dailyWaterRequirement": {
-            "type": "integer",
-            "description": "Requirement water for one day",
-            "example": "1200"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "DateTime of creating user",
-            "example": "2023-12-21T09:22:59.612Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "DateTime of last updating user",
-            "example": "2023-12-22T19:53:52.702Z"
           }
         }
       },
@@ -867,6 +976,18 @@
           "avatar": {
             "type": "string",
             "example": "http://avatar_link.com"
+          }
+        }
+      },
+
+      "UpdatePasswordRequest": {
+        "type": "object",
+        "required": ["password"],
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "user-11.password12345678"
           }
         }
       },
@@ -1129,16 +1250,6 @@
             "type": "integer",
             "description": "Daily normal water",
             "example": "2700"
-          }
-        }
-      },
-
-      "DocsResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Html swagger document"
           }
         }
       }
