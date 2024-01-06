@@ -1,5 +1,5 @@
 const ElasticEmail = require('@elasticemail/elasticemail-client');
-const { ELASTIC_EMAIL_EMAIL_FROM, ELASTIC_EMAIL_API_KEY, FRONTEND_BASE_URL } =
+const { ELASTIC_EMAIL_EMAIL_FROM, ELASTIC_EMAIL_API_KEY, FRONTEND_URL } =
   process.env;
 
 const defaultClient = ElasticEmail.ApiClient.instance;
@@ -16,7 +16,7 @@ const sendEmail = ({ userEmail, token }) => {
       Body: [
         ElasticEmail.BodyPart.constructFromObject({
           ContentType: 'HTML',
-          Content: `<a target='_blank' href='${FRONTEND_BASE_URL}/forgot-password/${token}'>Reset password</a>`,
+          Content: `<a target='_blank' href='${FRONTEND_URL}/forgot-password/${token}'>Reset password</a>`,
         }),
       ],
       Subject: 'Password recovery',
