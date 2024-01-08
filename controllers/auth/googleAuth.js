@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { User } = require("../../models/user");
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 // const bcrypt = require('bcryptjs');
 
 const { SECRET_KEY } = process.env;

@@ -72,7 +72,11 @@ const userSchema = new Schema(
       default: null,
     },
     chatId: { type: String, default: '' },
+    googleId:  {
+      type: String,
+    }
   },
+
   { versionKey: false, timestamps: true }
 );
 

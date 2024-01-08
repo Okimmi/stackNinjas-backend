@@ -17,6 +17,8 @@ const {
   updatePasswordSchema,
 } = require('../../models/user');
 const { notEmptyBodySchema } = require('../../schemas');
+const tryCatchWrapper = require('../../utils/try-catch-wrapper');
+const { googleAuth, googleRedirect } = require('../../controllers/auth/googleAuth');
 
 const router = express.Router();
 
@@ -47,5 +49,9 @@ router.patch(
   validateBody(updatePasswordSchema),
   updatePassword
 );
+
+router.get("/google", tryCatchWrapper(googleAuth));
+
+router.get("/google-redirect", tryCatchWrapper(googleRedirect));
 
 module.exports = router;
