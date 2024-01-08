@@ -5,7 +5,15 @@ const runChatBotServer = require("./utils/runChatBotServer");
 const { DB_HOST, PORT } = process.env;
 
 mongoose
-  .connect(DB_HOST)
+  .connect(DB_HOST, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // Set the write concern without a semicolon
+    writeConcern: {
+      w: "majority",
+      j: true,
+    },
+  })
   .then(() => {
     console.log("Database connection successful");
     app.listen(PORT || 3000, () => {
